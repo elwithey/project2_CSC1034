@@ -1,12 +1,11 @@
-first_name,last_name,title,gender,date_of_birth,occupation,account_balance,overdraft_limit
 Elyse,Charpling,Honorable,Female,2/24/1946,Professor,31291.64,2565
 Ogden,Venediktov,Mrs,Male,12/27/1964,Recruiter,7099.84,2488
-Desiree,Bolmann,Mr,Female,12/20/1975,Payment Adjustment Coordinator,44752.79,2474
+Desiree,Bolmann,Mr,Female,12/20/1975,Accountant,44752.79,2474
 Marinna,Dugue,Mr,Female,8/12/1985,Professor,20385.97,4315
-Emory,Gather,Mrs,Male,5/7/1971,Registered Nurse,27542.11,3936
+Emory,Gather,Mrs,Male,5/7/1971,Lawyer,27542.11,3936
 Gualterio,Emor,Dr,Male,5/23/1976,Environmental Tech,4813.27,1192
 Beck,Pitchford,Dr,Male,6/27/1945,Social Worker,18523.38,1441
-Alma,Belt,Ms,Female,3/22/2003,Registered Nurse,24075.08,1659
+Alma,Belt,Ms,Female,3/22/2003,Registered Doctor,24075.08,1659
 Fraser,Benini,Mrs,Male,2/18/1957,Engineer III,44001.49,641
 Carmelina,Bouldstridge,Ms,Female,12/22/1974,Assistant Media Planner,2743.2,2716
 Maryann,Blasik,Honorable,Female,4/5/1969,Senior Financial Analyst,13334.54,4725
@@ -63,7 +62,7 @@ Bette,Eidelman,Dr,Female,2/13/1945,Technical Writer,39643.12,3553
 Shelli,Cufflin,Mrs,Female,9/14/1947,Geological Engineer,41282.54,2554
 Abbi,Cattach,Ms,Female,11/25/1973,VP Sales,17290.07,2376
 Erhart,Stebbing,Mr,Male,3/8/1959,Health Coach I,16779.21,4179
-Libby,O'Carrol,Honorable,Female,8/29/1956,Recruiter,32033.21,4489
+Libby,Carrol,Honorable,Female,8/29/1956,Recruiter,32033.21,4489
 Chaddie,Kingescot,Rev,Bigender,6/27/1984,Environmental Specialist,-4863.45,735
 Poppy,Novotna,Mr,Female,4/14/1970,Help Desk Operator,49300.21,4904
 Xena,Charrisson,Dr,Female,3/6/1987,Product Engineer,32119.46,1671
