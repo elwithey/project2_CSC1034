@@ -1,7 +1,25 @@
+import csv
 
-class Manage():
+class Manage:
 
     def __init__(self):
+        self.data= []
+        self.fName = ""
+        self.sName = ""
+        self.title = ""
+        self.gender = ""
+        self.DOB = ""
+        self.occupation = ""
+        self.balance = int()
+        self.overdraft = int()
+
+
+    #retrieves a list of all data on all clients in the bank
+    def retrieve(self):
+        print(*self.data, sep ="\n")
+
+    #appends the csv file to add a new client
+    def append(self):
         self.fName = input("Please enter your first name")
         self.sName = input("Please enter your second name")
         self.title = input("Please enter your title e.g. Mr/Mrs")
@@ -10,13 +28,6 @@ class Manage():
         self.occupation = input("Please enter your occupation")
         self.balance = input("Please enter your bank balance")
         self.overdraft = input("Please enter your preferred overdraft limit (maximum £5000)")
-
-    #retrieves a list of all data on all clients in the bank
-    def retrieve(self):
-        print(*(self.read()), sep ="\n")
-
-    #appends the csv file to add a new client
-    def append(self):
 
 
 
@@ -28,31 +39,41 @@ class Manage():
 
 
     def read(self):
-        # opens the clients' data from a csv file
-        f = open("MOCK_DATA.csv", "r")
-        data = f.readlines()
-        f.close()
 
-        # turns data into a list
-        for i in range(len(data)):
-            # takes away whitespace
-            data[i] = data[i].strip()
-        return data
+        with open("MOCK_DATA.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                self.data.append(row)
+
+    def search(self):
+        self.read()
+        self.fname = input("Please input your first name")
+        column = [x[1] for x in self.data]
+        if self.fname in column:
+            for x in range(0,len(self.data)):
+                if self.fname == self.data[x][1]:
+
+                    print(self.data[x])
+        else:
+            print("Name doesn't exist")
+
+
 
 if __name__ == "__main__":
+    bank = Manage()
     print("WELCOME TO THE BANK")
     customer = input("Are you a new customer? Y/N  ")
     if customer == "Y":
         customer = input("Do you want to set up an account? Y/N  ")
         if customer == "Y":
-            bank = Manage()
+
             bank.append()
         else:
             print("Goodbye")
     else:
-        type = input("Are you an existing customer? Y/N  ")
+        customer = input("Are you an existing customer? Y/N  ")
         
-        if type == "Y":
+        if customer == "Y":
             print("MENU")
             print("""
                 1. CHECK BALANCE
@@ -62,6 +83,9 @@ if __name__ == "__main__":
             Please pick 1,2,3 or 4.""" )
             choice = input("")
             if choice == "1":
+                bank.search()
+                
+
 
 
 
