@@ -53,38 +53,43 @@ class Manage:
             for x in range(0,len(self.data)):
                 if self.fname == self.data[x][1]:
 
-                    print(self.data[x])
+                    return self.data[x]
         else:
             print("Name doesn't exist")
 
-
+    def checkBalance (self):
+        balance = self.search()
+        print(balance[7])
 
 if __name__ == "__main__":
+    quit = False
     bank = Manage()
     print("WELCOME TO THE BANK")
     customer = input("Are you a new customer? Y/N  ")
     if customer == "Y":
         customer = input("Do you want to set up an account? Y/N  ")
         if customer == "Y":
-
             bank.append()
-        else:
-            print("Goodbye")
+
     else:
         customer = input("Are you an existing customer? Y/N  ")
-        
         if customer == "Y":
-            print("MENU")
-            print("""
-                1. CHECK BALANCE
-                2. WITHDRAW MONEY
-                3. ADD MONEY
-                4. LOG OUT
-            Please pick 1,2,3 or 4.""" )
-            choice = input("")
-            if choice == "1":
-                bank.search()
-                
+            while not quit:
+                print("MENU")
+                print("""
+                    1. CHECK BALANCE
+                    2. WITHDRAW MONEY
+                    3. ADD MONEY
+                    4. LOG OUT
+                Please pick 1,2,3 or 4.""" )
+                choice = input("")
+                if choice == "1":
+                    bank.checkBalance()
+                    choice = input("Would you like to perform any further actions? Y/N  ")
+                    if choice == "N":
+                        quit = True
+    print("Goodbye")
+
 
 
 
