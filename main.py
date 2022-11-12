@@ -47,19 +47,50 @@ class Manage:
 
     def search(self):
         self.read()
-        self.fname = input("Please input your first name")
-        column = [x[1] for x in self.data]
-        if self.fname in column:
-            for x in range(0,len(self.data)):
-                if self.fname == self.data[x][1]:
+        search = True
+        while search:
+            #reference
+            self.fname = input("Please input your first name")
+            column = [x[1] for x in self.data]
+            if self.fname in column:
+                for x in range(0,len(self.data)):
+                    if self.fname == self.data[x][1]:
 
-                    return self.data[x]
-        else:
-            print("Name doesn't exist")
+                        return (self.data[x],x)
+            else:
+                print("Name doesn't exist")
+                repeat = True
+                while repeat:
+                    choice = input("Would you like to try again (T) or create a new account (A)?")
+                    if choice == "A":
+                        repeat = False
+                        self.append()
+                    elif choice == "T":
+                        search = True
+                        repeat = False
+                    else:
+                        print("Not an option")
+
 
     def checkBalance (self):
-        balance = self.search()
-        print(balance[7])
+        balance = (self.search())
+        # prints balance of client
+        print(balance[0][7])
+
+    def addMoney(self):
+        information = (self.search())
+        x = int(information[1])
+        balance = int(information[0][7])
+
+        amount = int(input("How much would you like to deposit into your account"))
+        balance += amount
+        self.data[x][7] = balance
+        print(amount,"has been depositied into your account. Your balance is now",balance)
+
+        quit = input("Would you like to perform any further actions? Y/N")
+        return quit
+
+#MAIN CODE -------------------------
 
 if __name__ == "__main__":
     quit = False
@@ -75,19 +106,24 @@ if __name__ == "__main__":
         customer = input("Are you an existing customer? Y/N  ")
         if customer == "Y":
             while not quit:
-                print("MENU")
+                print("")
                 print("""
+                MENU
                     1. CHECK BALANCE
                     2. WITHDRAW MONEY
                     3. ADD MONEY
                     4. LOG OUT
-                Please pick 1,2,3 or 4.""" )
+                Please pick 1,2,3 or 4.""")
                 choice = input("")
                 if choice == "1":
                     bank.checkBalance()
-                    choice = input("Would you like to perform any further actions? Y/N  ")
-                    if choice == "N":
-                        quit = True
+                    action = input("Would you like to perform any further actions? Y/N  ")
+
+                elif choice == "3":
+                    action = bank.addMoney()
+
+                if action == "N":
+                    quit = True
     print("Goodbye")
 
 
