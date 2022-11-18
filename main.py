@@ -10,13 +10,11 @@ class Manage:
 
     # retrieves a list of all data on all clients in the bank
     def retrieve(self):
-        # self.read()
         for i in range(0, len(self.data)):
             print(self.data[i])
 
     # appends the csv file to add a new client
     def append(self, fName, sName, title, gender, DOB, occupation, balance, overdraft):
-        # self.read()
         if (fName is None) or (sName is None) or (title is None) or (gender is None) or (DOB is None) or \
                 (occupation is None) or (balance is None) or (overdraft is None):
             # If we find a variable  which is None, raise an Exception
@@ -28,8 +26,6 @@ class Manage:
         client_id = data_len + 1
         self.data.append([(str(client_id)), fName, sName, title, gender, DOB, occupation, (str(balance)),
                           (str(overdraft))])
-        # for i in range(0, len(self.data)):
-            # print(self.data[i])
 
     def read(self):
 
@@ -39,17 +35,15 @@ class Manage:
                 self.data.append(row)
 
     def searchName(self, fName):
-        # self.read()
         # reference
         column = [x[1] for x in self.data]
         if fName in column:
             for x in range(0, len(self.data)):
                 if fName == self.data[x][1]:
-                    print(self.data[x])
                     return self.data[x], x
 
+
     def searchDOB(self, DOB):
-        # self.read()
         final = []
         # reference
         column = [x[5] for x in self.data]
@@ -61,11 +55,10 @@ class Manage:
             return "empty"
         return final
 
-    def searchOverdraft(self):
+    def searchNegative(self):
         final = []
         for x in range(0, len(self.data)):
-            overdraft = -abs(int(self.data[x][8]))
-            if float(self.data[x][7]) < overdraft:
+            if float(self.data[x][7]) < 0:
                 final.append(self.data[x])
         if len(final) == 0:
             return "NO CLIENTS IN OVERDRAFT"
@@ -74,14 +67,16 @@ class Manage:
     def checkBalance(self, fName):
         balance = (self.searchName(fName))
         # prints balance of client
+        if balance is None:
+            raise TypeError
         return balance[0][7]
 
     def addMoney(self, amount, fName):
         information = (self.searchName(fName))
         if information is None:
             raise TypeError
-        x = int(information[0])
-        balance = int(information[7])
+        x = int(information[1])
+        balance = int(information[0][7])
         balance += amount
         self.data[x][7] = balance
         print(amount, "has been deposited into the account. The balance is now", balance)
@@ -140,7 +135,3 @@ class Manage:
             self.data[x][int(choice)] = str(overdraft)
 
         print(information[0])
-
-
-bank = Manage()
-bank.searchOverdraft()

@@ -4,10 +4,15 @@ from main import Manage
 bank = Manage()
 
 
+def seeAllData():
+    print("Runs method retrieve. Prints list of all clients and all details")
+    bank.retrieve()
+
+
 def addMoneyFail():
-    print("Runs function addMoney.Enters a non-existent user")
+    print("\nRuns function addMoney.Enters a non-existent user")
     try:
-        bank.addMoney(100, "Erin")
+        bank.addMoney(100, "Annie")
     except TypeError:
         print("Fails as expected")
     else:
@@ -15,7 +20,7 @@ def addMoneyFail():
 
 
 def addMoneyPass():
-    print("\n Runs function addMoney.Enters a user in the MOCK_DATA.csv file")
+    print("\nRuns function addMoney.Enters a user in the MOCK_DATA.csv file")
     try:
         bank.addMoney(100, "Edward")
     except TypeError:
@@ -24,9 +29,29 @@ def addMoneyPass():
         print("Passed as expected")
 
 
+def searchNamePass():
+    print("\nRuns method SearchName. Searches CSV file for a client by their first name")
+    try:
+        test = bank.searchName("Catherine")
+    except ValueError:
+        print("Fails unexpectedly. Should return data for client with name Catherine")
+    else:
+        print("Passed as expected")
+        print(test[0])
+
+
+def searchNameFail():
+    print("\nRuns method SearchName. Searches CSV file for a client by their first name")
+    test = bank.searchName("Annie")
+    if test is None:
+        print("Fails as expected")
+    else:
+        print("Passed unexpectedly. Should fail as name Annie not in csv file")
+        print(test[0])
+
+
 def addClientPass():
     print("\nRuns function append.Enters correct information to create a new user")
-
     try:
         bank.append("Erin", "Withey", "Miss", "Female", "8/20/2004", "Student", 5000, 300)
     except ValueError:
@@ -64,9 +89,19 @@ def addClientFail2():
         print("yay")
 
 
-def returnDOB():
+def returnDOBPass():
     print("\nRuns function searchDOB. Prints clients with a birthday of 10/12/2002")
     dob = "10/12/2002"
+    test = bank.searchDOB(dob)
+    if test == "empty":
+        print("NO CLIENTS WITH THAT DATE OF BIRTH")
+    else:
+        print("Clients details with birthday", dob, "are", test)
+
+
+def returnDOBFail():
+    print("\nRuns function searchDOB. Prints clients with a birthday of 10/12/2002")
+    dob = "08/20/2004"
     test = bank.searchDOB(dob)
     if test == "empty":
         print("NO CLIENTS WITH THAT DATE OF BIRTH")
@@ -88,18 +123,46 @@ def deletePass():
             print(bank.data[i])
 
 
-def searchOverdraft():
-    print("\nRuns function searchOverdraft. Finds clients who are over their overdraft")
-    value = bank.searchOverdraft()
+def checkBalancePass():
+    print("\nRuns method checkBalance. Finds the balance of a specific client")
+    try:
+        test = bank.checkBalance("Faaris")
+    except TypeError:
+        print("Fails unexpectedly")
+    else:
+        print("Passed as expected.")
+        print(test)
+
+
+def checkBalanceFail():
+    print("\nRuns method checkBalance. Finds the balance of a specific client")
+    try:
+        test = bank.checkBalance("Annie")
+    except TypeError:
+        print("Fails as expected as username is not in csvfile")
+    else:
+        print("Passed unexpectedly as name should not be found")
+        print(test)
+
+
+def searchNegative():
+    print("\nRuns function searchNegative. Finds clients who have a negative balance")
+    value = bank.searchNegative()
     for i in range(0, len(value)):
         print(value[i])
 
 
+seeAllData()
 addMoneyFail()
 addMoneyPass()
 addClientPass()
 addClientFail1()
 addClientFail2()
-returnDOB()
+returnDOBPass()
+returnDOBFail()
 deletePass()
-searchOverdraft()
+searchNegative()
+searchNamePass()
+searchNameFail()
+checkBalancePass()
+checkBalanceFail()
