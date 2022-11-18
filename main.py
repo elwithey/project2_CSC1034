@@ -27,12 +27,14 @@ class Manage:
         self.data.append([(str(client_id)), fName, sName, title, gender, DOB, occupation, (str(balance)),
                           (str(overdraft))])
 
+
     def read(self):
 
         with open("MOCK_DATA.csv", "r") as csvfile:
             reader = csv.reader(csvfile, delimiter=",")
             for row in reader:
                 self.data.append(row)
+
 
     def searchName(self, fName):
         # reference
@@ -77,18 +79,19 @@ class Manage:
             raise TypeError
         x = int(information[1])
         balance = int(information[0][7])
+        print(balance,"is your current balance")
         balance += amount
         self.data[x][7] = balance
         print(amount, "has been deposited into the account. The balance is now", balance)
 
-    def withdrawMoney(self, fName):
+    def withdrawMoney(self,amount, fName):
         information = (self.searchName(fName))
         x = int(information[1])
         balance = float(information[0][7])
         overdraft = int(information[0][8])
         overdraft = -abs(overdraft)
 
-        amount = float(input("How much would you like to withdraw from the account"))
+        print(balance,"is your current balance")
         balance -= amount
         self.data[x][7] = balance
         print(amount, "has been withdrawn from the account. The balance is now", balance)
@@ -106,32 +109,33 @@ class Manage:
         self.data.pop(position)
         return self.data
 
-    def edit(self, fName):
+    def editfName(self, fName, newfName):
+        information = self.searchName(fName)
+        print(fName,"is your current first name")
+        x = int(information[1])
+        self.data[x][1] = newfName
+        print(self.data[x][1],"is your new first name")
+
+
+    def editsName(self, fName,newsName):
         information = self.searchName(fName)
         x = int(information[1])
-        print("""
-        WHICH DETAIL WOULD YOU LIKE TO EDIT
-        
-        1. FIRST NAME
-        2. SECOND NAME
-        3. DATE OF BIRTH
-        4. OCCUPATION
-        5. BALANCE
-        6. OVERDRAFT""")
-        choice = input("")
-        if choice == "1":
-            self.data[x][int(choice)] = input("Please input the new forename")
-        elif choice == "2":
-            self.data[x][int(choice)] = input("Please input the new surname")
-        elif choice == "3":
-            self.data[x][int(choice)] = input("Please input the new date of birth. Format: M/D/YYYY")
-        elif choice == "4":
-            self.data[x][int(choice)] = input("Please input the new occupation")
-        elif choice == "5":
-            balance = float(input("Please input the new balance"))
-            self.data[x][int(choice)] = str(balance)
-        elif choice == "6":
-            overdraft = int(input("Please input the new overdraft. Limit is £500"))
-            self.data[x][int(choice)] = str(overdraft)
+        self.data[x][2] = newsName
 
-        print(information[0])
+
+    def editOccupation(self, fName,newOccupation):
+        information = self.searchName(fName)
+        x = int(information[1])
+        self.data[x][6] = newOccupation
+
+
+    def editDOB(self, fName,newDOB):
+        information = self.searchName(fName)
+        x = int(information[1])
+        self.data[x][5] = newDOB
+
+
+    def overdraft(self, fName, newOverdraft):
+        information = self.searchName(fName)
+        x = int(information[1])
+        self.data[x][8] = str(newOverdraft)
