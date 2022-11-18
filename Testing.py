@@ -1,6 +1,5 @@
 from main import Manage
 
-# import pytest
 bank = Manage()
 
 
@@ -10,7 +9,7 @@ def seeAllData():
 
 
 def addMoneyFail():
-    print("\nRuns function addMoney.Enters a non-existent user")
+    print("\nRuns method addMoney.Deposits money into a users account")
     try:
         bank.addMoney(100, "Annie")
     except TypeError:
@@ -20,11 +19,41 @@ def addMoneyFail():
 
 
 def addMoneyPass():
-    print("\nRuns function addMoney.Enters a user in the MOCK_DATA.csv file")
+    print("\nRuns method addMoney.Deposits money into a users account")
     try:
         bank.addMoney(100, "Edward")
     except TypeError:
         print("Fails Unexpectedly. Should find client named Edward and deposit £100")
+    else:
+        print("Passed as expected")
+
+
+def withdrawalPass():
+    print("\nRuns method withdrawMoney.Withdraws money from a users account")
+    try:
+        bank.withdrawMoney(100, "Tanisha")
+    except TypeError:
+        print("Fails Unexpectedly. Should find client named Tanisha and withdraw £100")
+    else:
+        print("Passed as expected")
+
+
+def withdrawalFail1():
+    print("\nRuns method withdrawMoney.Withdraws money from a users account")
+    try:
+        bank.withdrawMoney(100, "Annie")
+    except TypeError:
+        print("Fail as expected as user does not exist")
+    else:
+        print("Passed unexpectedly")
+
+
+def withdrawalFail2():
+    print("\nRuns method withdrawMoney.Withdraws money from a users account who goes over overdraft so is charged £5")
+    try:
+        bank.withdrawMoney(100, "Edward")
+    except TypeError:
+        print("Failed unexpectedly")
     else:
         print("Passed as expected")
 
@@ -51,7 +80,7 @@ def searchNameFail():
 
 
 def addClientPass():
-    print("\nRuns function append.Enters correct information to create a new user")
+    print("\nRuns method append.Enters correct information to create a new user")
     try:
         bank.append("Erin", "Withey", "Miss", "Female", "8/20/2004", "Student", 5000, 300)
     except ValueError:
@@ -60,11 +89,11 @@ def addClientPass():
     else:
         print("Passed as expected")
         client = bank.searchName("Erin")
-        print(client[0],"has now been added to the list")
+        print(client[0], "has now been added to the list")
 
 
 def addClientFail1():
-    print("\nRuns function append. Enters an invalid value for title column")
+    print("\nRuns method append. Enters an invalid value for title column")
 
     try:
         bank.append("Erin", "Withey", None, "Female", "8/20/2004", "Student", 5000, 300)
@@ -78,7 +107,7 @@ def addClientFail1():
 
 
 def addClientFail2():
-    print("\nRuns function addClient. Enters an a string for the balance value")
+    print("\nRuns method addClient. Enters an a string for the balance value")
 
     try:
         bank.append("Erin", "Withey", "Miss", "Female", "8/20/2004", "Student", "5000", 300)
@@ -86,11 +115,23 @@ def addClientFail2():
         message = "Fails as expected. Balance is not an integer, please check. Aborting creation of new client."
         print(message)
     else:
-        print("yay")
+        print("Passed when should have failed")
+
+
+def addClientFail3():
+    print("\nRuns method addClient. Enters an a string for the balance value")
+
+    try:
+        bank.append("Erin", "Withey", "Miss", "Female", "8/20/2004", "Student", "5000", -200)
+    except TypeError:
+        message = "Fails as expected. Overdraft is below 0, please check. Aborting creation of new client."
+        print(message)
+    else:
+        print("passed when expected fail")
 
 
 def returnDOBPass():
-    print("\nRuns function searchDOB. Prints clients with a birthday of 10/12/2002")
+    print("\nRuns method searchDOB. Prints clients with a birthday of 10/12/2002")
     dob = "10/12/2002"
     test = bank.searchDOB(dob)
     if test == "empty":
@@ -100,7 +141,7 @@ def returnDOBPass():
 
 
 def returnDOBFail():
-    print("\nRuns function searchDOB. Prints clients with a birthday of 10/12/2002")
+    print("\nRuns method searchDOB. Prints clients with a birthday of 08/20/2004")
     dob = "08/20/2004"
     test = bank.searchDOB(dob)
     if test == "empty":
@@ -110,16 +151,14 @@ def returnDOBFail():
 
 
 def deletePass():
-    print("\nRuns function delete. Deletes client with name Hayden at position 91")
+    print("\nRuns method delete. Deletes client with name Hayden at position 91")
     try:
         bank.delete("Hayden")
-        print("")
     except ValueError:
-        message = "Unexpected fail"
-        print(message)
+        print("Unexpected fail")
     else:
         print("Test passed as expected")
-        for i in range(0,len(bank.data)):
+        for i in range(0, len(bank.data)):
             print(bank.data[i])
 
 
@@ -146,10 +185,114 @@ def checkBalanceFail():
 
 
 def searchNegative():
-    print("\nRuns function searchNegative. Finds clients who have a negative balance")
+    print("\nRuns method searchNegative. Finds clients who have a negative balance")
     value = bank.searchNegative()
     for i in range(0, len(value)):
         print(value[i])
+
+
+def editfNamePass():
+    print("\nRuns method editfName.  Edits clients registered first name")
+    try:
+        bank.editfName("Edward", "Roman")
+    except NameError:
+        print("Unexpected error")
+    else:
+        print("Passed Successfully")
+
+
+def editfNameFail():
+    print("\nRuns method editfName.  Edits clients registered first name")
+    try:
+        bank.editfName("Edward", Roman)
+    except NameError:
+        print("Expected error as a value is not a string")
+    else:
+        print("Unexpected Pass")
+
+
+def editsNamePass():
+    print("\nRuns method editsName.  Edits clients registered surname name")
+    try:
+        bank.editsName("Roman", "Ahearn")
+    except NameError:
+        print("Unexpected error")
+    else:
+        print("Passed Successfully")
+
+
+def editsNameFail():
+    print("\nRuns method editsName. Edits clients registered surname name")
+    try:
+        bank.editsName("Roman", Ahearn)
+    except NameError:
+        print("Expected error as a value is not a string")
+    else:
+        print("Unexpected Pass")
+
+
+def editOccupationPass():
+    print("\nRuns method editOccupation.  Edits clients registered occupation")
+    try:
+        bank.editOccupation("Roman", "CustomerAssistant")
+    except NameError:
+        print("Unexpected error")
+    else:
+        print("Passed Successfully")
+
+
+def editOccupationFail():
+    print("\nRuns method editOccupation. Edits clients registered occupation")
+    try:
+        bank.editOccupation("Roman", CustomerAssistant)
+    except NameError:
+        print("Expected error as a value is not a string")
+    else:
+        print("Unexpected Pass")
+
+
+def editDOBPass():
+    print("\nRuns method editDOB.  Edits clients registered date of birth")
+    try:
+        bank.editDOB("Roman", "5/7/2003")
+    except NameError:
+        print("Unexpected error")
+    else:
+        print("Passed Successfully")
+
+
+def editDOBFail():
+    print("\nRuns method editDOB. Edits clients registered date of birth")
+    try:
+        bank.editDOB("Roman", 5 / 7 / 2003)
+    except TypeError:
+        print("Expected error as a value is not a string")
+    else:
+        print("Unexpected Pass")
+
+
+def editOverdraftPass():
+    print("\nRuns method editOverdraft.  Edits clients registered overdraft")
+    try:
+        bank.editOverdraft("Roman", 3000)
+    except NameError:
+        print("Unexpected error")
+    else:
+        print("Passed Successfully")
+
+
+def editOverdraftFail():
+    print("\nRuns method editOverdraft. Edits clients registered overdraft")
+    try:
+        bank.editOverdraft("Roman", "3000")
+    except TypeError:
+        print("Expected error as a value is not a string")
+    else:
+        print("Unexpected Pass")
+
+
+def savedata():
+    bank.write()
 
 
 seeAllData()
@@ -158,6 +301,7 @@ addMoneyPass()
 addClientPass()
 addClientFail1()
 addClientFail2()
+addClientFail3()
 returnDOBPass()
 returnDOBFail()
 deletePass()
@@ -166,3 +310,17 @@ searchNamePass()
 searchNameFail()
 checkBalancePass()
 checkBalanceFail()
+withdrawalPass()
+withdrawalFail1()
+withdrawalFail2()
+editfNamePass()
+editfNameFail()
+editsNamePass()
+editsNameFail()
+editOccupationPass()
+editOccupationFail()
+editDOBPass()
+editDOBFail()
+editOverdraftPass()
+editOverdraftFail()
+savedata()
